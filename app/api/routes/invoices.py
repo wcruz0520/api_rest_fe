@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException, Response, Depends
 
+from app.api import deps
 from app.schemas.invoice import Factura
 from app.services.sri import SRIValidationError, generate_invoice_xml
 
@@ -7,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/invoices", response_class=Response)
-def create_invoice(invoice: Factura) -> Response:
+def create_invoice(invoice: Factura, Usuario = Depends(deps.get_current_user)) -> Response:
     """Create an electronic invoice and return its XML representation."""
     try:
         xml_content = generate_invoice_xml(invoice)
