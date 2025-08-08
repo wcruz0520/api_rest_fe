@@ -1,9 +1,10 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from .database import SessionLocal
-from .auth import decode_access_token
-from .crud import get_user_by_id
+
+from app.core.security import decode_access_token
+from app.crud.user import get_user_by_id
+from app.db.database import SessionLocal
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
@@ -26,4 +27,4 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = get_user_by_id(db, user_id=payload.get("user_id"))
     if user is None or not user.activo:
         raise credentials_exception
-    return user
+    return user 
