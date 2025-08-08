@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 
 class UsuarioCreate(BaseModel):
     usuario: str
@@ -27,5 +27,4 @@ class UsuarioOut(BaseModel):
     telefono: Optional[str] = None
     activo: bool
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

@@ -3,6 +3,8 @@ uvicorn
 sqlalchemy
 pyodbc
 bcrypt
+passlib
 python-jose[cryptography]
 python-multipart
 python-dotenv
+pydantic-settings
